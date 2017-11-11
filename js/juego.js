@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(800, 1200, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
     game.load.image('forest', 'assets/forest.png');
@@ -9,6 +9,8 @@ function preload() {
     game.load.spritesheet('boss','assets/boss.png',80,70);
     game.load.spritesheet('boss','assets/boss.png',80,70);
     game.load.spritesheet('rock','assets/rock.png',50,50);
+
+   // game.world.setBounds(0,0,600,1000);
 }
 var player;
 var boss;
@@ -19,9 +21,12 @@ var score = 0;
 var scoreText;
 var rocas;
 var roca;
-var Sw = true;
+var Sw, Sw2 = true;
 var demon;
 var demons;
+var flag = false;
+var Interval, Interval2 = false;
+var focus = false;
 
 function create() {
     //  We're going to be using physics, so enable the Arcade Physics system
@@ -31,7 +36,10 @@ function create() {
     //  The platforms group contains the ground and the 2 ledges we can jump on
 
 
-    demons=game.add.group();
+
+    focus = setInterval(checkFocus, 200);
+
+   /* demons=game.add.group();
     demons.enableBody = true;
     demon=demons.create(0, 0, 'demon');
     demon.body.gravity.y = 300;
@@ -40,8 +48,27 @@ function create() {
     demon.animations.add('right',[3,4,5],10,true);
     demon.animations.add('dead',[6,7],10,false);
     demon.animations.play('right');
-    demon.collideWorldBounds=true;
-    demon.body.velocity.x=100;
+    demon.collideWorldBounds=true;*/
+    //demon.body.velocity.x=100;
+    var Sum = 0;
+    demons = game.add.group();
+    demons.enableBody = true;
+
+   for (var i = 0; i < 4; i++) {
+        demon = demons.create(360, game.world.height -(325+Sum), 'demon');
+        demon.body.gravity.y = 300;
+        demon.body.bounce.y = 0;
+        demon.animations.add('left',[0,1,2],10,true);
+        demon.animations.add('right',[3,4,5],10,true);
+        demon.animations.add('dead',[6,7],10,false);
+        Sum = Sum +250;
+       
+   }
+  
+     Interval2 = window.setInterval(Dmove,3000);
+   
+    
+
 
     platforms = game.add.group();
     //  We will enable physics for any object that is created in this group
@@ -52,20 +79,30 @@ function create() {
     ground.scale.setTo(2, 2);
     //  This stops it from falling away when you jump on it
     ground.body.immovable = true;
+
     //  Now let's create two ledges
-    var ledge = platforms.create(400, 400, 'ground');
-    ledge.body.immovable = true;
-    ledge.scale.setTo(2,0.5);
-    //boss platform
-    ledge = platforms.create(275, 80, 'ground');
+    ledge = platforms.create(360, 80, 'ground');
     ledge.body.immovable = true;
     ledge.scale.setTo(0.2,0.5);
-    ledge = platforms.create(-150, 250, 'ground');
-    ledge.body.immovable = true;
-    ledge.scale.setTo(1,0.5);
+    for (var i = 1; i<5; i++) {
+        var ledge = platforms.create(0, game.world.height -(200*i), 'ground');
+        ledge.body.immovable = true;
+        ledge.scale.setTo(0.5,0.5);
+
+        ledge = platforms.create(600, game.world.height -(200*i) ,'ground');
+        ledge.body.immovable = true;
+        ledge.scale.setTo(0.5,0.5);
+
+        ledge = platforms.create(300, game.world.height -(250*i),'ground');
+        ledge.body.immovable = true;
+        ledge.scale.setTo(0.5,0.5);
+
+    }
+
+
     // The player and its settings
     player = game.add.sprite(32, game.world.height - 150, 'dude');
-    boss =game.add.sprite(275,10,'boss');
+    boss =game.add.sprite(360,10,'boss');
     //  We need to enable physics on the player
     game.physics.arcade.enable(player);
     game.physics.arcade.enable(boss);
@@ -107,7 +144,11 @@ function create() {
     //  Our controls.
     cursors = game.input.keyboard.createCursorKeys();
     //boss move;
-    var ID = window.setInterval(Bmove,3000);
+    Interval = window.setInterval(Bmove,3000);
+    Bmove();
+    
+
+    //game.camera.follow(player);
   }
 
   function update() {
@@ -175,6 +216,19 @@ function Bmove (){
    roca.body.collideWorldBounds = true;
 
 }
+
+function Dmove(){
+    if (Sw2) {
+        demon.body.velocity.x = 20;
+        demon.animations.play('right');
+        Sw2 = false;
+    }else{
+        demon.body.velocity.x = -20;
+        demon.animations.play('left');
+        Sw2 = true;
+    }
+}
+
 function killR(player, enemy){
     player.kill();
     enemy.kill();
@@ -198,3 +252,20 @@ function render () {
     game.debug.body(boss);
     game.debug.body(player);
 }
+function reset() {
+    clearInterval(Interval); // stops launching barrels
+    clearInterval(focus);
+}
+function checkFocus(){
+     if (!document.hasFocus()) {
+            clearInterval(Interval);
+            flag = true;
+     }else{
+        if (flag) {
+            Interval = window.setInterval(Bmove, 3000);
+            flag = false;
+        }
+     }
+}
+
+
