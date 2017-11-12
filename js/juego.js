@@ -1,7 +1,7 @@
 var game = new Phaser.Game(800, 1200, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
 function preload() {
     game.load.image('forest', 'assets/forest.png');
-    game.load.image('ground', 'assets/platform.png');
+    game.load.image('ground', 'assets/piso.png');
     game.load.spritesheet('demon', 'assets/demon.png',64,70);
     game.load.spritesheet('coin', 'assets/coin.png',40,45);
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
