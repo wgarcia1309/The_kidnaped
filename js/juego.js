@@ -2,12 +2,11 @@ var game = new Phaser.Game(800, 1200, Phaser.AUTO, '', { preload: preload, creat
 function preload() {
     game.load.image('forest', 'assets/forest.png');
     game.load.image('ground', 'assets/platform.png');
-    game.load.spritesheet('demon', 'assets/demon.png',80,70);
+    game.load.spritesheet('demon', 'assets/demon.png',64,70);
     game.load.spritesheet('coin', 'assets/coin.png',40,45);
     game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
     game.load.spritesheet('boss','assets/boss.png',80,70);
-    game.load.spritesheet('rock','assets/rock.png',50,50);
-    game.load.spritesheet('dead','assets/rock.png',1,50);
+    game.load.spritesheet('rock','assets/rock.png',25,25);
     game.world.setBounds(0,0,800,1200);
 }
 //Jugador enemigo
@@ -77,8 +76,8 @@ function create() {
         ledge.body.immovable = true;
         ledge.scale.setTo(0.5,0.5);
         //Creacion de muros que regresan a los enemigos
-        murod = murosd.create(299, game.world.height -(250*i)-30, 'dead');
-        murod = murosd.create(500, game.world.height -(250*i)-30, 'dead');
+        murod = murosd.create(270, game.world.height -(250*i)-30, '');
+        murod = murosd.create(500, game.world.height -(250*i)-30, '');
         ledge = platforms.create(300, game.world.height -(250*i),'ground');
         ledge.body.immovable = true;
         ledge.scale.setTo(0.5,0.5);
@@ -109,8 +108,8 @@ function create() {
     }
     scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff' });
     lifeText = game.add.text(650, 16, 'Vidas: 3', { fontSize: '32px', fill: '#fff' });
-    muror = murosr.create(0, game.world.height - 120, 'dead');
-    muror = murosr.create(799, game.world.height - 120, 'dead');
+    muror = murosr.create(0, game.world.height - 120, '');
+    muror = murosr.create(799, game.world.height - 120, '');
     cursors = game.input.keyboard.createCursorKeys();
     Bmove();
     Interval = window.setInterval(Bmove,3000);
@@ -167,9 +166,11 @@ function Bmove (){
    }
    game.physics.enable(roca, Phaser.Physics.ARCADE);
    roca.body.gravity.y=300;
-   roca.body.setCircle(17);
+   roca.body.setCircle(12);
    roca.body.bounce.setTo(1, 0.7);
    roca.body.collideWorldBounds = true;
+   roca.animations.add('rotate', [0, 1, 2], 10, true);
+   roca.animations.play("rotate");
 }
 function kill(player, enemy){
     player.kill();
