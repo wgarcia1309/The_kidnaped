@@ -1,4 +1,4 @@
-var player,boss;
+var player,boss, princesa;
 var platforms,coins,rocas,demons,deads;
 var roca,demon,muror,murod;
 var cursors;
@@ -12,7 +12,7 @@ var mainAudio;
 var mainState = {
     create:function () {
         mainAudio = game.add.audio('smain');
-  		  mainAudio.play();
+  		mainAudio.play();
         game.physics.startSystem(Phaser.Physics.ARCADE);
         game.add.sprite(0, 0, 'castle');
         focus = setInterval(checkFocus, 200);
@@ -38,6 +38,21 @@ var mainState = {
             demon.animations.add('left',[0,1,2],10,true);
             demon.animations.add('right',[3,4,5],10,true);
             demon.animations.add('dead',[6,7],10,false);
+            //monedas al lado izquierdo de los esbirros
+            coin = coins.create(300,game.world.height -(325+Sum), 'coin');
+            coin.collideWorldBounds=true;
+            coin.body.gravity.y = 300;
+            coin.body.bounce.y = 0.1;
+            coin.animations.add('rotate',[0,1,2,3,4,5],10,true);
+            coin.animations.play('rotate');
+            //monedas lado derecho de los esbirros
+            coin = coins.create(460,game.world.height -(325+Sum), 'coin');
+            coin.collideWorldBounds=true;
+            coin.body.gravity.y = 300;
+            coin.body.bounce.y = 0.1;
+            coin.animations.add('rotate',[0,1,2,3,4,5],10,true);
+            coin.animations.play('rotate');
+
             if(d>5){
               demon.body.velocity.x = -100;
               demon.animations.play("left");
@@ -55,6 +70,11 @@ var mainState = {
         ledge = platforms.create(360, 80, 'ground');
         ledge.body.immovable = true;
         ledge.scale.setTo(0.2,0.5);
+
+        ledge = platforms.create(600, game.world.height -1000, 'ground');
+        ledge.body.immovable = true;
+        ledge.scale.setTo(0.5,0.5);
+
         for (var i = 1; i<5; i++) {
             var ledge = platforms.create(0, game.world.height -(200*i), 'ground');
             ledge.body.immovable = true;
@@ -62,6 +82,20 @@ var mainState = {
             ledge = platforms.create(600, game.world.height -(200*i) ,'ground');
             ledge.body.immovable = true;
             ledge.scale.setTo(0.5,0.5);
+            //monedas en las plataformas sin esbirros (izquierda)
+            coin = coins.create(60, game.world.height -(260*i), 'coin');
+            coin.collideWorldBounds=true;
+            coin.body.gravity.y = 300;
+            coin.body.bounce.y = 0.1;
+            coin.animations.add('rotate',[0,1,2,3,4,5],10,true);
+            coin.animations.play('rotate');
+            //monedas en las plataformas sin esbirros (derecha)
+            coin = coins.create(700, game.world.height -(260*i) , 'coin');
+            coin.collideWorldBounds=true;
+            coin.body.gravity.y = 300;
+            coin.body.bounce.y = 0.1;
+            coin.animations.add('rotate',[0,1,2,3,4,5],10,true);
+            coin.animations.play('rotate');
             //Creacion de muros que regresan a los enemigos
             murod = murosd.create(270, game.world.height -(250*i)-30, '');
             murod = murosd.create(500, game.world.height -(250*i)-30, '');
@@ -71,28 +105,25 @@ var mainState = {
         }
         //Creacion del Jugador y del jefe;
         player = game.add.sprite(32, game.world.height - 150, 'dude');
+        princesa = game.add.sprite(700, game.world.height -1150, 'princesa');
         boss =game.add.sprite(360,10,'boss');
         game.physics.arcade.enable(player);
+        game.physics.arcade.enable(princesa);
         game.physics.arcade.enable(boss);
+        princesa.body.bounce.y=0.2;
+        princesa.body.gravity.y=300;
         player.body.bounce.y = 0.2;
         player.body.gravity.y = 300;
+        princesa.body.collideWorldBounds=true;
         player.body.collideWorldBounds = true;
         boss.body.bounce.y = 0;
         boss.body.collideWorldBounds = true;
-        player.animations.add('left', [0, 1, 2, 3], 10, true);
-        player.animations.add('right', [5, 6, 7, 8], 10, true);
+        player.animations.add('left', [0, 1, 2, 3, 4], 10, true);
+        player.animations.add('right', [6, 7, 8, 9, 10], 10, true);
         boss.animations.add('right', [5, 6, 7, 8,9], 20, false);
         boss.animations.add('left', [0, 1, 2, 3,4], 20, false);
         boss.body.immovable = true;
 
-        for (var i = 0; i < 12; i++){
-            var coin = coins.create(i * 70, 80, 'coin');
-            coin.collideWorldBounds=true;
-            coin.body.gravity.y = 300;
-            coin.body.bounce.y = 0.1;
-            coin.animations.add('rotate',[0,1,2,3,4,5],10,true);
-            coin.animations.play('rotate');
-        }
         scoreText = game.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff' });
         lifeText = game.add.text(650, 16, 'Vidas: 3', { fontSize: '32px', fill: '#fff' });
         muror = murosr.create(0, game.world.height - 120, '');
@@ -109,6 +140,7 @@ var mainState = {
         game.physics.arcade.collide(coins, platforms);
         game.physics.arcade.collide(demons, platforms);
         game.physics.arcade.collide(rocas, rocas);
+        game.physics.arcade.collide(princesa, platforms);
 
         game.physics.arcade.overlap(demons, murosd,regresar, null, this);
         game.physics.arcade.overlap(rocas, murosr, remover, null, this);
@@ -116,6 +148,8 @@ var mainState = {
         game.physics.arcade.overlap(player, rocas, kill, null, this);
         game.physics.arcade.overlap(player, boss,kill,null,this);
         game.physics.arcade.overlap(player, demons,kill,null,this);
+        game.physics.arcade.overlap(player, princesa,winG,null, this);
+
         player.body.velocity.x = 0;
         if (cursors.left.isDown){
             player.body.velocity.x = -150;
@@ -156,6 +190,18 @@ var mainState = {
         score += 10;
         scoreText.text = 'Score: ' + score
     }
+    function winG(){
+        if (score >=20) {
+            reset();
+            mainState.win();
+        }
+    }
+    function loseG(){
+        if (life<=0) {
+            reset();
+            mainState.lose();    
+        }  
+    }
     function Bmove (){
        if (Sw) {
          boss.animations.play('right');
@@ -190,6 +236,7 @@ var mainState = {
     }
 
     function reset() {
+        score=0;
         clearInterval(Interval); // stops launching barrels
         clearInterval(focus);
     }

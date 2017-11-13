@@ -11,7 +11,10 @@ var loadState = {
         game.load.audio('scoin','sounds/coin.wav');
         game.load.audio('sganar','sounds/Ganar.wav');
         game.load.audio('sperder','sounds/perder.wav');
+        game.load.image('win', 'assets/Ganarr.png');
         game.load.image('back','assets/back.png');
+        game.load.image('princesa', 'assets/jaula.png');
+        game.load.image('lose', 'assets/lose.png');
         game.load.image('inst','assets/intructions.png');
         game.load.image('castle', 'assets/castle.jpg');
         game.load.image('boton', 'assets/boton.png');
@@ -20,7 +23,7 @@ var loadState = {
         game.load.image('ground', 'assets/piso.gif');
         game.load.spritesheet('demon', 'assets/demon.png',64,70);
         game.load.spritesheet('coin', 'assets/coin.png',40,45);
-        game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+        game.load.spritesheet('dude', 'assets/sprite.png', 36, 32);
         game.load.spritesheet('boss','assets/boss.png',80,70);
         game.load.spritesheet('rock','assets/rock.png',25,25);
         game.world.setBounds(0,0,800,1200);
