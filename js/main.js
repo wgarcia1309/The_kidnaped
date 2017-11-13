@@ -14,25 +14,21 @@ var mainState = {
         mainAudio = game.add.audio('smain');
   		  mainAudio.play();
         game.physics.startSystem(Phaser.Physics.ARCADE);
-        //se añade el fondo
-        game.add.sprite(0, 0, 'forest');
+        game.add.sprite(0, 0, 'castle');
         focus = setInterval(checkFocus, 200);
         var Sum = 0;
-        //Se crean los grupos
         platforms = game.add.group();
         rocas = game.add.group();
         demons = game.add.group();
         murosd = game.add.group();
         murosr = game.add.group();
         coins = game.add.group();
-        //Habilita fisicas
         platforms.enableBody = true;
         rocas.enableBody = true;
         demons.enableBody = true;
         coins.enableBody = true;
         murosd.enableBody=true;
         murosr.enableBody=true;
-        //Creacion de demonios
         for (var i = 0; i < 4; i++) {
             demon = demons.create(360,game.world.height -(325+Sum), 'demon');
             var d= Math.random()*10;

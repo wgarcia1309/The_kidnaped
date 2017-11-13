@@ -13,11 +13,11 @@ var loadState = {
         game.load.audio('sperder','sounds/perder.wav');
         game.load.image('back','assets/back.png');
         game.load.image('inst','assets/intructions.png');
-        game.load.image('forest', 'assets/forest.png');
+        game.load.image('castle', 'assets/castle.jpg');
         game.load.image('boton', 'assets/boton.png');
         game.load.image('ayuda', 'assets/ayuda.png');
         game.load.image('fondo', 'assets/fondo.png');
-        game.load.image('ground', 'assets/piso.png');
+        game.load.image('ground', 'assets/piso.gif');
         game.load.spritesheet('demon', 'assets/demon.png',64,70);
         game.load.spritesheet('coin', 'assets/coin.png',40,45);
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);

@@ -21,7 +21,7 @@ var menuState = {
 		var Swkey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		Swkey.onDown.addOnce(menuState.start, this);
 
-		var start = game.add.button(240 , game.world.height-750, 'boton', menuState.start, this, 2, 1, 0);
+		var start = game.add.button(260 , game.world.height-750, 'boton', menuState.start, this, 2, 1, 0);
 		start.scale.setTo(0.8);
 		var ins = game.add.button(510 , game.world.height-760, 'ayuda', menuState.ins, this, 2, 1, 0);
 		ins.scale.setTo(0.8);
