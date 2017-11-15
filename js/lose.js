@@ -1,17 +1,17 @@
 var loseState = {
-	
+
 	create: function() {
 
 		var titulol = game.add.tileSprite(0, 0, 800, 600, 'lose');
 
-		var winLabel = game.add.text(40, 50, 'There is another'+ '\n'+ 'chance for everyone', {
-			font: '80px Arial', 
+		var winLabel = game.add.text(40, 400, 'There is another'+ '\n'+ 'chance for everyone', {
+			font: '80px Arial',
 			fill: '#ffffff',
 			stroke: '#000',
 			strokeThickness: 10
 		});
 
-		var startLabel = game.add.text(80, game.world.height-650, 'Press the Spacebar key to restart', {
+		var startLabel = game.add.text(40, 20, 'Press the Spacebar key to restart', {
 			font: '25px Arial',
 			fill: '#ffffff',
 			stroke: '#000',
