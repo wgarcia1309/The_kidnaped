@@ -228,17 +228,17 @@ var mainState = {
        if (Sw) {
          boss.animations.play('right');
          roca= rocas.create(boss.x+80, boss.y, 'rock');
-         roca.body.velocity.x=10+ Math.random() * 150;
+         roca.body.velocity.x=150+ Math.random() * 150;
          Sw = false;
        }else{
          boss.animations.play('left');
          roca= rocas.create(boss.x, boss.y, 'rock');
-         roca.body.velocity.x=-10- Math.random() * 150;
+         roca.body.velocity.x=-150- Math.random() * 150;
          Sw = true;
        }
        game.physics.enable(roca, Phaser.Physics.ARCADE);
-       roca.body.gravity.y=500;
-       roca.body.bounce.setTo(1, 0.7);
+       roca.body.gravity.y=300;
+       roca.body.bounce.setTo(1, 0);
        roca.body.collideWorldBounds = true;
        roca.animations.add('rotate', [0, 1, 2], 10, true);
        roca.animations.play("rotate");
