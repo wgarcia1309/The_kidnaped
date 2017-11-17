@@ -38,9 +38,13 @@ var mainState = {
             demon.animations.add('right',[3,4,5],10,true);
             demon.animations.add('dead',[6,7],10,false);
             //monedas al lado izquierdo de los esbirros
-            makeCoin(300,325+Sum);
+            if (i%2==0) {
+              makeCoin(300,325+Sum);
+            }
             //monedas lado derecho de los esbirros
-            makeCoin(460,325+Sum);
+            if (i%2==1) {
+              makeCoin(460,325+Sum);
+            }
             var d= Math.random()*10;
             if(d>5){
               d= -60-Math.random()*40;
@@ -72,9 +76,15 @@ var mainState = {
             }
 
             //monedas en las plataformas sin esbirros (izquierda)
-            makeCoin(60,260*i);
+            if (i%2==1 || i ==4) {
+              makeCoin(60,260*i);
+            }
             //monedas en las plataformas sin esbirros (derecha)
-            makeCoin(700,260*i);
+            if (i==1) {
+              makeCoin(700,260*2);
+              makeCoin(700,970);
+              makeCoin(700, 100);
+            }
             //Creacion de muros que regresan a los enemigos
             murod = murosd.create(270, game.world.height -(250*i)-30, '');
             murod = murosd.create(500, game.world.height -(250*i)-30, '');
@@ -104,8 +114,8 @@ var mainState = {
         cursors = game.input.keyboard.createCursorKeys();
         Bmove();
         Interval = window.setInterval(Bmove,3000);
-        scoreText = game.add.text(100, game.world.height, 'score: '+score, {fontSize: '32px', fill: '#8F8F8F' });
-        scoreLife = game.add.text(500, 16, 'Life: '+life, {fontSize: '32px', fill: '#8F8F8F' });
+        scoreText = game.add.text(100, game.world.height, 'score: '+score, {fontSize: '32px', fill: '#fff' });
+        scoreLife = game.add.text(500, 16, 'Life: '+life, {fontSize: '32px', fill: '#fff' });
         game.camera.follow(player);
         scoreText.fixedToCamera = true;
         scoreText.cameraOffset.setTo(10, 0);
@@ -176,12 +186,12 @@ var mainState = {
             scoreLife.text = 'Life: ' + life;
             player.reset(32, game.world.height - 100);
         }else{
-        var  sound= game.add.audio('sperder');
-        sound.play();
-        mainAudio.resume();
         reset();
         mainState.lose();
       }
+      var  sound= game.add.audio('sperder');
+      sound.play();
+      mainAudio.resume();
     }
     function Bmove (){
        if (Sw) {
@@ -204,6 +214,7 @@ var mainState = {
     }
 
     function reset() {
+        life=3;
         score=0;
         clearInterval(Interval); // stops launching barrels
         clearInterval(focus);

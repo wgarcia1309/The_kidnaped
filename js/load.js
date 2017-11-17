@@ -23,7 +23,7 @@ var loadState = {
         game.load.image('ground', 'assets/piso.gif');
         game.load.spritesheet('demon', 'assets/demon.png',64,70);
         game.load.spritesheet('coin', 'assets/coin.png',40,45);
-        game.load.spritesheet('dude', 'assets/sprite.png', 36, 32);
+        game.load.spritesheet('dude', 'assets/sprite.png', 36, 29);
         game.load.spritesheet('boss','assets/boss.png',80,70);
         game.load.spritesheet('rock','assets/rock.png',25,25);
         game.world.setBounds(0,0,800,1200);

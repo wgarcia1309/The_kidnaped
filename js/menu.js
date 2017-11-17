@@ -11,7 +11,7 @@ var menuState = {
 			strokeThickness: 10
 		});
 
-		var startLabel = game.add.text(150, game.world.height-650, 'Presione la barra espaciadora para empezar', {
+		var startLabel = game.add.text(150, game.world.height-650, 'Press the Spacebar key to restart', {
 			font: '25px Arial',
 			fill: '#ffffff',
 			stroke: '#000',
