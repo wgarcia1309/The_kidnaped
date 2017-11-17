@@ -114,7 +114,7 @@ var mainState = {
         cursors = game.input.keyboard.createCursorKeys();
         Bmove();
         Interval = window.setInterval(Bmove,3000);
-        scoreText = game.add.text(100, game.world.height, 'score: '+score, {fontSize: '32px', fill: '#fff' });
+        scoreText = game.add.text(100, game.world.height, 'Score: '+score, {fontSize: '32px', fill: '#fff' });
         scoreLife = game.add.text(500, 16, 'Life: '+life, {fontSize: '32px', fill: '#fff' });
         game.camera.follow(player);
         scoreText.fixedToCamera = true;
